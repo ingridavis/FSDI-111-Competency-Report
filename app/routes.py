@@ -14,7 +14,6 @@ def get_all_products(): #GET/SCAN/
     cursor = get_db().execute("SELECT * FROM product", ()) 
     results = cursor.fetchall() # returning all the data, PUT, POST
     cursor.close()
-    
     return results
 
 """
@@ -46,7 +45,7 @@ def create_product(product):
     return cursor.lastrowid      
         
 
-def delete_product(product): #DELETE
+def delete_product(product): 
     
     sql = """DELETE from product where id=?"""
     cursor = get_db()
@@ -58,7 +57,6 @@ def delete_product(product): #DELETE
 
 
 # connecting to html page
-
 @app.route("/catalog")
 def scan_products():
     product = get_all_products()
@@ -120,8 +118,8 @@ def get_products():
         sku = request.form.get("sku")
 
         create_product((id, product_title, brand_name, product_descrip, product_price, ship_price, sku))
-        
         return redirect(url_for("get_products"))
+
 
 @app.route('/product/delete', methods=["POST"])
 def product_delete():
@@ -178,7 +176,6 @@ def get_users():
         flash("Created new user!")
         return redirect(url_for("get_users"))
       
-
 
 @app.route('/agent')
 def agent():
