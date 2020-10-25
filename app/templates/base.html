@@ -1,0 +1,16 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Catalog {% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Menu </a>
+    <a class="nav-link active" href={{ url_for("scan_products") }}>Catalog<span class="sr-only">(current)</span></a>
+    <a class="nav-link" href={{ url_for("get_products") }}>Admin</a>
+    <a class="nav-link" href={{ url_for("get_users") }}>User Sign-In</a>
+    
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+{% endblock %}
