@@ -11,7 +11,7 @@ from app.forms.admin import AdminForm
 from app.userDB import get_db, get_all_users, create_user
 
 #global var
-password = "111"
+
 
 # functions
 def get_all_products(): #GET/SCAN/
@@ -81,16 +81,18 @@ def index():  # function
     return "Hello world"
 
 # Products on Catalog route 
-@app.route('/login', methods=["GET"])
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    if "GET" in request.method:
-        form = AdminForm()
-        if password != request.form.get("password")
+    return render_template("login.html")
+    if request.method == 'POST':
+        #request.form = AdminForm()
+        password = request.form.get("password")
+        if password == "111":
+            flash("Successful login")
+            return redirect (url_for("get_products"))
+        else:
             flash("Invalid Admin Password")
             return redirect (url_for("login"))
-        else:
-            flash("Successful login")
-            return redirect(url_for("get_products"))
 
 @app.route('/admin/product', methods=["GET", "POST"]) #SESSION 3 complete at end of class
 def get_products():
