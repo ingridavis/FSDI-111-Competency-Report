@@ -7,9 +7,13 @@ from app import app  # importing app variable
 from flask import g, request, render_template, redirect, url_for, session, flash#g is global 
 from app.forms.name import ProductForm
 from app.forms.user import NameForm
+from app.forms.admin import AdminForm
 from app.userDB import get_db, get_all_users, create_user
 
+#global var
+password = "111"
 
+# functions
 def get_all_products(): #GET/SCAN/
     cursor = get_db().execute("SELECT * FROM product", ()) 
     results = cursor.fetchall() # returning all the data, PUT, POST
@@ -77,7 +81,18 @@ def index():  # function
     return "Hello world"
 
 # Products on Catalog route 
-@app.route('/admin', methods=["GET", "POST"]) #SESSION 3 complete at end of class
+@app.route('/login', methods=["GET"])
+def login():
+    if "GET" in request.method:
+        form = AdminForm()
+        if password != request.form.get("password")
+            flash("Invalid Admin Password")
+            return redirect (url_for("login"))
+        else:
+            flash("Successful login")
+            return redirect(url_for("get_products"))
+
+@app.route('/admin/product', methods=["GET", "POST"]) #SESSION 3 complete at end of class
 def get_products():
     # creating an output dictionary 
     out= {"ok": True, "body": ""} # standard formart for our restful API
@@ -136,11 +151,8 @@ def product_delete():
         delete_product((id, product_title, brand_name, product_descrip, product_price, ship_price, sku))   
         return redirect(url_for("scan_products")) 
 
-@app.route("/dump/users")
-def show_all_users():
-    users = get_all_users()
-    return render_template("all_users.html", users=users)
 
+    
 
 @app.route('/users', methods=["GET", "POST"])
 def get_users():
