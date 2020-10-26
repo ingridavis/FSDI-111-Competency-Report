@@ -83,8 +83,8 @@ def index():  # function
 # Products on Catalog route 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
-    if request.method == 'POST':
+    
+    if "POST" in request.method:
         #request.form = AdminForm()
         password = request.form.get("password")
         if password == "111":
@@ -93,6 +93,7 @@ def login():
         else:
             flash("Invalid Admin Password")
             return redirect (url_for("login"))
+    return render_template("login.html")
 
 @app.route('/admin/product', methods=["GET", "POST"]) #SESSION 3 complete at end of class
 def get_products():
