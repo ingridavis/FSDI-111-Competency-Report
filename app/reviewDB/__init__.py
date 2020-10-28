@@ -15,23 +15,22 @@ def get_db():
     return db
 
 
-def get_all_users():
-    cursor = get_db().execute("SELECT * FROM user", ())
+def get_all_reviews():
+    cursor = get_db().execute("SELECT * FROM review", ())
     results = cursor.fetchall()
     cursor.close()
     return results
 
 
-def create_user(user):
-    sql = """INSERT INTO user (
+def create_review():
+    sql = """INSERT INTO review (
                     id,
-                    first_name,
-                    last_name,
-                    address,
-                    billing_card,
-                    phone_number)
-            VALUES (?, ?, ?, ?)"""
+                    review,
+                    author
+                    )
+            VALUES (?, ?)"""  
     cursor = get_db()
-    cursor.execute(sql, user)
+    cursor.execute(sql)
+    # takes user and match up to the columns
     cursor.commit()
-    return True                         
+    return True                  

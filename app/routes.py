@@ -9,7 +9,9 @@ from app.forms.name import ProductForm
 from app.forms.user import NameForm
 from app.forms.admin import AdminForm
 from app.forms.update import UpdateForm
+from app.forms.review import ReviewForm
 from app.userDB import get_db, get_all_users, create_user
+from app.reviewDB import get_db, get_all_reviews, create_review
 
 #global var
 
@@ -38,6 +40,8 @@ def create_product(product):
     # takes user and match up to the columns
     cursor.commit()
     return True
+
+
 
 def update_product(product_id):
     sql = """UPDATE product SET 
@@ -149,7 +153,6 @@ def product_update(id):
     
     
 
-
 @app.route('/product/delete', methods=["POST"])
 def product_delete():
     if "POST" in request.method:
@@ -195,6 +198,20 @@ def get_users():
         flash("Created new user!")
         return redirect(url_for("get_users"))
 
+@app.route('/review', methods=["GET", "POST"])
+def get_reviews():
+    # Creating an output dictionary
+    if "GET" in request.method:
+        return render_template('reviews.html', form=ReviewForm)
+        
+    if "POST" in request.method:
+        id = request.form.get("id")
+        review = request.form.get("review")
+        author = request.form.get("author")
+        
+        create_review((id, review, author))
+
+        return redirect(url_for("get_reviews"))
 
 @app.route('/agent')
 def agent():

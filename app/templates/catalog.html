@@ -38,6 +38,7 @@
             <td>{{ product[5] }}</td>
             <td>{{ product[6] }}</td>
             <td> <button type="button" class="btn btn-info">Add to Cart</button> </td>
+            <td><a href={{ url_for("get_reviews") }}>Submit Review</a></td>
            
             
 
@@ -50,7 +51,7 @@
                 <input type="hidden" name="product_price" value="{{ product[4] }}">
                 <input type="hidden" name="ship_price" value="{{ product[5] }}">
                 <input type="hidden" name="sku" value="{{ product[6] }}">
-                <a href="">Submit review</a>
+                
                 
               </form>
             </td>
