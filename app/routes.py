@@ -8,6 +8,7 @@ from flask import g, request, render_template, redirect, url_for, session, flash
 from app.forms.name import ProductForm
 from app.forms.user import NameForm
 from app.forms.admin import AdminForm
+from app.forms.update import UpdateForm
 from app.userDB import get_db, get_all_users, create_user
 
 #global var
@@ -38,6 +39,19 @@ def create_product(product):
     cursor.commit()
     return True
 
+def update_product(product_id):
+    sql = """UPDATE product SET 
+        product_title=?,
+        brand_name=?,
+        product_descrip=?,
+        product_price=?,
+        sku=?  
+        WHERE id=""" + str(product_id)
+    cursor = get_db()
+    cursor.execute(sql)
+    cursor.commit()  
+    cursor.close()
+    
 
 def delete_product(product_id):
 
@@ -94,7 +108,7 @@ def login():
 @app.route('/admin/product', methods=["GET", "POST"])
 def get_products():
     # creating an output dictionary
-    
+
     if "GET" in request.method:
 
         return render_template('admin.html', products=get_all_products(), form=ProductForm())
@@ -111,6 +125,29 @@ def get_products():
         create_product((id, product_title, brand_name,
                         product_descrip, product_price, ship_price, sku))
         return redirect(url_for("get_products"))
+
+@app.route('/product/update/<int:id>', methods=["GET","POST"])
+def product_update(id):
+    if "GET" in request.method:
+        # Trying to autofill ID from user clicking on EDIT 
+        form = UpdateForm()
+        id = form.id.data
+        return render_template('update.html', form=UpdateForm())
+
+    if "PUT" in request.method:
+        id = request.form.get("id")
+        product_title = request.form.get("product_title")
+        brand_name = request.form.get("brand_name")
+        product_descrip = request.form.get("product_descrip")
+        product_price = request.form.get("product_price")
+        ship_price = request.form.get("ship_price")
+        sku = request.form.get("sku")
+
+        update_product((id, product_title, brand_name, product_descrip, product_price, ship_price, sku))
+        return redirect(url_for("product_update"))
+
+    
+    
 
 
 @app.route('/product/delete', methods=["POST"])

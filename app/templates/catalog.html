@@ -20,7 +20,9 @@
         <th scope="col">Price</th>
         <th scope="col">Shipping</th>
         <th scope="col">SKU</th>
-      
+        <th scope="col">Purchase</th>
+        <th scope="col">Review</th>
+
 
       </tr>
     </thead>
@@ -35,10 +37,12 @@
             <td>{{ product[4] }}</td>
             <td>{{ product[5] }}</td>
             <td>{{ product[6] }}</td>
+            <td> <button type="button" class="btn btn-info">Add to Cart</button> </td>
+           
             
 
             <td>
-              <form method="POST" action="{{ url_for('product_delete') }}">
+              <form method="POST" action="{{ url_for('get_products') }}">
                 <input type="hidden" name="id" value="{{ product[0] }}">
                 <input type="hidden" name="product_name" value="{{ product[1] }}">
                 <input type="hidden" name="brand_name" value="{{ product[2] }}">
@@ -46,8 +50,7 @@
                 <input type="hidden" name="product_price" value="{{ product[4] }}">
                 <input type="hidden" name="ship_price" value="{{ product[5] }}">
                 <input type="hidden" name="sku" value="{{ product[6] }}">
-                <input type="submit" value="Delete">
-                
+                <a href="">Submit review</a>
                 
               </form>
             </td>

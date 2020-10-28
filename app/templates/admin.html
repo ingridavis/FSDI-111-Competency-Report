@@ -29,6 +29,8 @@
         <th scope="col">Price</th>
         <th scope="col">Shipping</th>
         <th scope="col">SKU</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -42,6 +44,9 @@
             <td>{{ product[4] }}</td>
             <td>{{ product[5] }}</td>
             <td>{{ product[6] }}</td>
+            <td><a href={{ url_for("product_update", id=product[0]) }}>Edit</a></td>
+            
+
 
             <td>
               <form method="POST" action="{{ url_for('product_delete') }}">
@@ -52,7 +57,7 @@
                 <input type="hidden" name="product_price" value="{{ product[4] }}">
                 <input type="hidden" name="ship_price" value="{{ product[5] }}">
                 <input type="hidden" name="sku" value="{{ product[6] }}">
-                <input type="submit" value="delete product">
+                <input type="submit" value="delete product" class="btn btn-danger btn-sm">
                 
               </form>
             </td>
